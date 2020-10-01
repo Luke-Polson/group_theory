@@ -45,12 +45,15 @@ class Group:
             return self.id
 
         for op1 in self.elements:
+            found = True
             for op2 in self.elements:
-                if not self.evaluate(op1, op2):
+                if self.evaluate(op1, op2) != op1 or self.evaluate(op2, op1) != op1:
+                    found = False
                     break
-            # if loop didn't break, we've found our identity
-            self.id = op1
-            return op1
+            # if found wasn't set to false, we've found it
+            if found:
+                self.id = op1
+                return op1
 
         raise ValueError("Identity does not exist - not a group.")
 
