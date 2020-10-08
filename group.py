@@ -47,7 +47,7 @@ class Group:
         for op1 in self.elements:
             found = True
             for op2 in self.elements:
-                if self.evaluate(op1, op2) != op1 or self.evaluate(op2, op1) != op1:
+                if self.evaluate(op1, op2) != op2 or self.evaluate(op2, op1) != op2:
                     found = False
                     break
             # if found wasn't set to false, we've found it
@@ -152,5 +152,18 @@ class Group:
         for i in range(n-1):
             temp = self.operation(temp, operand)
         return temp
+
+    def is_subgroup(self, other_group):
+        for op1 in self.elements:
+            if op1 not in other_group.elements:
+                return False
+            for op2 in self.elements:
+                if (self.evaluate(op1, op2) not in self.elements or
+                        self.evaluate(op2, op1) not in self.elements):
+                    return False
+        return True
+
+
+
 
 
